@@ -15,8 +15,6 @@
         ":rebaseStalePrs",
         ":semanticPrefixFixDepsChoreOthers",
         "group:unitTest",
-        "schedule:automergeNonOfficeHours",
-        "schedule:nonOfficeHours",
         "workarounds:all"
     ],
     "platformAutomerge": true,
