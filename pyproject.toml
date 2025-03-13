@@ -1,0 +1,17 @@
+[project]
+name = "renovate"
+version = "0.1.0"
+readme = "README.md"
+authors = [
+    { name = "Thomas Kristensen", email = "thomas@sl.m04r.space" }
+]
+requires-python = ">=3.10"
+
+[tool.tomlscript]
+check = "uv run pre-commit run --all-files"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.1.0",
+    "tomlscript>=0.2.1",
+]
