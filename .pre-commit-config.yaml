@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.31.2
+    hooks:
+      - id: check-github-workflows
+      - id: check-renovate
+        files: default.json
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  - repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 39.185.0
+    hooks:
+      - id: renovate-config-validator
+      - name: renovate-default-config-validator
+        id: renovate-config-validator
+        files: ^default\.json$
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.6.6
+    hooks:
+      - id: uv-sync
+        stages: [pre-commit, post-checkout, post-merge, post-rewrite]
