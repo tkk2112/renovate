@@ -6,6 +6,7 @@ authors = [
     { name = "Thomas Kristensen", email = "thomas@sl.m04r.space" }
 ]
 requires-python = ">=3.11"
+classifiers = ["Private :: Do Not Upload"]
 
 [tool.aliases]
 check = "uv run pre-commit run --all-files"
