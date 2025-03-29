@@ -2,34 +2,41 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "automergeStrategy": "auto",
     "extends": [
+        ":automergeMinor",
         ":automergePr",
+        ":automergeRequireAllStatusChecks",
+        ":automergeStableNonMajor",
+        ":combinePatchMinorReleases",
         ":configMigration",
-        ":disableDependencyDashboard",
+        ":dependencyDashboard",
         ":enablePreCommit",
         ":enableRenovate",
-        ":semanticCommits",
+        ":enableVulnerabilityAlertsWithLabel(vulnerability)",
         ":ignoreUnstable",
         ":label(renovate)",
         ":maintainLockFilesWeekly",
-        ":prConcurrentLimit20",
+        ":prConcurrentLimit10",
+        ":prHourlyLimit4",
         ":prImmediately",
         ":rebaseStalePrs",
+        ":semanticCommits",
         ":semanticPrefixFixDepsChoreOthers",
+        ":separateMultipleMajorReleases",
+        ":timezone(Europe/Oslo)",
+        "group:allNonMajor",
         "group:unitTest",
+        "replacements:all",
+        "schedule:automergeNonOfficeHours",
+        "schedule:nonOfficeHours",
         "workarounds:all"
     ],
     "platformAutomerge": true,
-    "prHourlyLimit": 10,
+    "prCreation": "status-success",
     "requiredStatusChecks": [
         "test"
     ],
-    "timezone": "Europe/Oslo",
     "vulnerabilityAlerts": {
-        "enabled": true,
         "groupName": "vulnerabilityAlerts",
-        "labels": [
-            "vulnerability"
-        ],
         "prCreation": "immediate",
         "schedule": []
     },
@@ -37,110 +44,23 @@
     "packageRules": [
         {
             "automerge": false,
+            "branchTopic": "{{{depNameSanitized}}}-{{{newMajor}}}.x",
+            "branchPrefix": "renovate/major-",
             "description": "Never automerge major updates",
             "matchUpdateTypes": [
                 "major"
             ]
-        },
+        }
+    ],
+    "regexManagers": [
         {
-            "addLabels": [
-                "automerge"
+            "fileMatch": [
+                "\\.sh$"
             ],
-            "automerge": true,
-            "description": "Automerge non-major dependencies",
-            "matchUpdateTypes": [
-                "lockFileMaintenance",
-                "minor",
-                "patch",
-                "pin",
-                "digest"
-            ]
-        },
-        {
-            "addLabels": [
-                "automerge"
+            "matchStrings": [
+                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sVERSION=(?<currentValue>.*)\\s"
             ],
-            "automerge": true,
-            "description": "Automerge dev dependencies regardless of update type",
-            "matchDepTypes": [
-                "devDependencies"
-            ]
-        },
-        {
-            "addLabels": [
-                "automerge"
-            ],
-            "automerge": true,
-            "description": "Automerge Python dependencies",
-            "matchManagers": [
-                "poetry",
-                "pep723",
-                "pep621",
-                "pip_requirements",
-                "pip_setup",
-                "setup-cfg"
-            ],
-            "matchUpdateTypes": [
-                "minor",
-                "patch"
-            ],
-            "stabilityDays": 3
-        },
-        {
-            "addLabels": [
-                "automerge"
-            ],
-            "automerge": true,
-            "description": "Automerge Ansible community.general updates",
-            "matchPackagePatterns": [
-                "^ansible",
-                "community.general"
-            ],
-            "matchUpdateTypes": [
-                "minor",
-                "patch"
-            ]
-        },
-        {
-            "automerge": false,
-            "description": "Update Docker dependencies, including base images",
-            "matchDatasources": [
-                "docker"
-            ]
-        },
-        {
-            "addLabels": [
-                "automerge"
-            ],
-            "automerge": true,
-            "description": "Automerge Python minor updates",
-            "matchDepNames": [
-                "python"
-            ],
-            "matchUpdateTypes": [
-                "minor"
-            ]
-        },
-        {
-            "addLabels": [
-                "automerge"
-            ],
-            "automerge": true,
-            "description": "Group linter updates",
-            "matchFileNames": [
-                ".pre-commit-config.yaml"
-            ]
-        },
-        {
-            "addLabels": [
-                "automerge"
-            ],
-            "automerge": true,
-            "description": "Group GitHub Actions updates",
-            "matchFileNames": [
-                ".github/**/*.yaml",
-                ".github/**/*.yml"
-            ]
+            "description": "Extract versions from shell scripts"
         }
     ]
 }
