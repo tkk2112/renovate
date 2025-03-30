@@ -11,11 +11,8 @@ classifiers = ["Private :: Do Not Upload"]
 [tool.aliases]
 check = "uv run pre-commit run --all-files"
 
-[tool.uv.sources]
-pyproject-aliases = { git = "https://github.com/tkk2112/pyproject_aliases.git" }
-
 [dependency-groups]
 dev = [
     "pre-commit>=4.1.0",
-    "pyproject-aliases",
+    "pyproject-aliases>=0.2.0",
 ]
