@@ -8,7 +8,6 @@
         ":automergeStableNonMajor",
         ":combinePatchMinorReleases",
         ":configMigration",
-        ":dependencyDashboard",
         ":enablePreCommit",
         ":enableRenovate",
         ":enableVulnerabilityAlertsWithLabel(vulnerability)",
