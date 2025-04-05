@@ -8,29 +8,29 @@
         ":automergeStableNonMajor",
         ":combinePatchMinorReleases",
         ":configMigration",
+        ":dependencyDashboard",
         ":enablePreCommit",
         ":enableRenovate",
         ":enableVulnerabilityAlertsWithLabel(vulnerability)",
-        ":ignoreUnstable",
         ":label(renovate)",
         ":maintainLockFilesWeekly",
         ":prConcurrentLimit10",
         ":prHourlyLimit4",
         ":prImmediately",
         ":rebaseStalePrs",
+        ":renovatePrefix",
         ":semanticCommits",
         ":semanticPrefixFixDepsChoreOthers",
         ":separateMultipleMajorReleases",
         ":timezone(Europe/Oslo)",
         "group:allNonMajor",
+        "group:monorepos",
+        "group:recommended",
         "group:unitTest",
+        "helpers:pinGitHubActionDigestsToSemver",
         "replacements:all",
-        "schedule:automergeNonOfficeHours",
-        "schedule:nonOfficeHours",
         "workarounds:all"
     ],
-    "platformAutomerge": true,
-    "prCreation": "status-success",
     "requiredStatusChecks": [
         "test"
     ],
@@ -40,17 +40,6 @@
         "schedule": []
     },
     "osvVulnerabilityAlerts": true,
-    "packageRules": [
-        {
-            "automerge": false,
-            "branchTopic": "{{{depNameSanitized}}}-{{{newMajor}}}.x",
-            "branchPrefix": "renovate/major-",
-            "description": "Never automerge major updates",
-            "matchUpdateTypes": [
-                "major"
-            ]
-        }
-    ],
     "regexManagers": [
         {
             "fileMatch": [
