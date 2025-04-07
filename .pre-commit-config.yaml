@@ -6,7 +6,7 @@ default_install_hook_types:
 
 repos:
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.32.1
+    rev: 0.33.0
     hooks:
       - id: check-github-workflows
       - id: check-renovate
@@ -17,14 +17,14 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 39.227.2
+    rev: 39.261.4
     hooks:
       - id: renovate-config-validator
       - name: renovate-default-config-validator
         id: renovate-config-validator
         files: ^default\.json$
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.6.12
+    rev: 0.6.17
     hooks:
       - id: uv-sync
         stages: [pre-commit, post-checkout, post-merge, post-rewrite]
