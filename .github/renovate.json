@@ -10,9 +10,9 @@
         }
     ],
     "renovate-config-presets": {
-        "fileMatch": [
-            "(^|/)renovate\\.json$",
-            "(^|/)default\\.json$"
+        "managerFilePatterns": [
+            "/(^|/)renovate\\.json$/",
+            "/(^|/)default\\.json$/"
         ]
     }
 }
