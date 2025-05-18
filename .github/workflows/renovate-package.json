@@ -1,0 +1,7 @@
+{
+  "name": "renovate-cache",
+  "private": true,
+  "dependencies": {
+    "renovate": "latest"
+  }
+}
