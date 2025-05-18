@@ -1,64 +1,69 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "automergeStrategy": "auto",
-    "extends": [
-        ":automergeMinor",
-        ":automergePr",
-        ":automergeRequireAllStatusChecks",
-        ":automergeStableNonMajor",
-        ":combinePatchMinorReleases",
-        ":configMigration",
-        ":dependencyDashboard",
-        ":enablePreCommit",
-        ":enableRenovate",
-        ":enableVulnerabilityAlertsWithLabel(vulnerability)",
-        ":label(renovate)",
-        ":maintainLockFilesWeekly",
-        ":prConcurrentLimit10",
-        ":prHourlyLimit4",
-        ":rebaseStalePrs",
-        ":renovatePrefix",
-        ":semanticCommits",
-        ":semanticPrefixFixDepsChoreOthers",
-        ":separateMultipleMajorReleases",
-        ":timezone(Europe/Oslo)",
-        "group:allNonMajor",
-        "group:monorepos",
-        "group:recommended",
-        "group:unitTest",
-        "schedule:weekly",
-        "helpers:pinGitHubActionDigestsToSemver",
-        "replacements:all",
-        "workarounds:all"
-    ],
-    "requiredStatusChecks": [
-        "test"
-    ],
-    "vulnerabilityAlerts": {
-        "groupName": "vulnerabilityAlerts",
-        "prCreation": "immediate",
-        "schedule": []
-    },
-    "packageRules": [
-        {
-            "matchUpdateTypes": ["minor", "patch"],
-            "matchCurrentVersion": "!/^0/",
-            "excludePackagePatterns": ["^@types/"],
-            "groupName": "all non-major dependencies",
-            "groupSlug": "all-minor-patch",
-            "schedule": ["before 5am on monday"]
-        }
-    ],
-    "osvVulnerabilityAlerts": true,
-    "regexManagers": [
-        {
-            "fileMatch": [
-                "\\.sh$"
-            ],
-            "matchStrings": [
-                "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sVERSION=(?<currentValue>.*)\\s"
-            ],
-            "description": "Extract versions from shell scripts"
-        }
-    ]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automergeStrategy": "auto",
+  "extends": [
+    ":automergeMinor",
+    ":automergePr",
+    ":automergeRequireAllStatusChecks",
+    ":automergeStableNonMajor",
+    ":combinePatchMinorReleases",
+    ":configMigration",
+    ":dependencyDashboard",
+    ":enablePreCommit",
+    ":enableRenovate",
+    ":enableVulnerabilityAlertsWithLabel(vulnerability)",
+    ":label(renovate)",
+    ":maintainLockFilesWeekly",
+    ":prConcurrentLimit10",
+    ":prHourlyLimit4",
+    ":rebaseStalePrs",
+    ":renovatePrefix",
+    ":semanticCommits",
+    ":semanticPrefixFixDepsChoreOthers",
+    ":separateMultipleMajorReleases",
+    ":timezone(Europe/Oslo)",
+    "group:allNonMajor",
+    "group:monorepos",
+    "group:recommended",
+    "group:unitTest",
+    "schedule:weekly",
+    "helpers:pinGitHubActionDigestsToSemver",
+    "replacements:all",
+    "workarounds:all"
+  ],
+  "vulnerabilityAlerts": {
+    "groupName": "vulnerabilityAlerts",
+    "prCreation": "immediate",
+    "schedule": []
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "schedule": [
+        "before 5am on monday"
+      ],
+      "matchPackageNames": [
+        "!/^@types//"
+      ]
+    }
+  ],
+  "osvVulnerabilityAlerts": true,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.sh$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sVERSION=(?<currentValue>.*)\\s"
+      ],
+      "description": "Extract versions from shell scripts"
+    }
+  ]
 }
