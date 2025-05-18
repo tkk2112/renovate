@@ -24,6 +24,8 @@ repos:
     rev: 40.14.5
     hooks:
       - id: renovate-config-validator
+        args: [--strict]
       - name: renovate-default-config-validator
         id: renovate-config-validator
-        files: ^default\.json$
+        files: '(^|/).?default(?:rc)?(?:\.json?)?$'
+        args: [--strict]

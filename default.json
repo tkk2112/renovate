@@ -38,28 +38,19 @@
   },
   "packageRules": [
     {
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
+      "matchUpdateTypes": ["minor", "patch"],
       "matchCurrentVersion": "!/^0/",
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
-      "schedule": [
-        "before 5am on monday"
-      ],
-      "matchPackageNames": [
-        "!/^@types//"
-      ]
+      "schedule": ["before 5am on monday"],
+      "matchPackageNames": ["!/^@types//"]
     }
   ],
   "osvVulnerabilityAlerts": true,
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "\\.sh$"
-      ],
+      "managerFilePatterns": ["/\\.sh$/"],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sVERSION=(?<currentValue>.*)\\s"
       ],
