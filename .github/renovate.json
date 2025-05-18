@@ -9,9 +9,18 @@
             "token": " ${{ secrets.RENOVATE_TOKEN }}"
         }
     ],
-    "ignorePaths": [],
-    "includePaths": [
-        "default.json",
-        ".github/renovate.json"
+    "customManagers": [
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "^default\\.json$"
+            ],
+            "matchStrings": [
+                "\\$schema:\\s*\"https://docs.renovatebot.com/renovate-schema.json\""
+            ],
+            "datasourceTemplate": "github-tags",
+            "depNameTemplate": "tkk2112/renovate",
+            "currentValueTemplate": "1.0.0"
+        }
     ]
 }
