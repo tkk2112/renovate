@@ -1,0 +1,53 @@
+name: Update Renovate Shared Config
+
+on:
+  schedule:
+    - cron: '0 0 * * MON'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check_config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g renovate
+
+      - run: |
+          # Check and validate default.json, capturing the output
+          output=$(npx --yes --package renovate -- renovate-config-validator default.json)
+
+          # If migration is necessary, apply the changes
+          if echo "$output" | grep -q "Config migration necessary"; then
+            # Extract the newConfig part from the output
+            newConfig=$(echo "$output" | sed -n '/\"newConfig\": {/,/}/p' | sed '1s/.*{/{/' | sed '$s/,$/}/')
+
+            # Pretty print the JSON and write it to default.json
+            echo "$newConfig" | node -e "console.log(JSON.stringify(JSON.parse(require('fs').readFileSync(0, 'utf-8')), null, 4))" > default.json
+
+            echo "Applied migration changes to default.json"
+          else
+            echo "No migration needed"
+          fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: Update Renovate shared config"
+          branch: renovate/config-update
+          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          title: "chore: apply Renovate config updates"
+          body: |
+            This PR was created automatically to apply the latest Renovate schema updates
+            to `default.json` via the Renovate Config Validator.
+          add-paths: |
+            default.json
