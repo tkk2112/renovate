@@ -8,5 +8,10 @@
             "matchHost": "github.com",
             "token": " ${{ secrets.RENOVATE_TOKEN }}"
         }
+    ],
+    "ignorePaths": [],
+    "includePaths": [
+        "default.json",
+        ".github/renovate.json"
     ]
 }
