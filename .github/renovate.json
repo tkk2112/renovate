@@ -8,5 +8,11 @@
             "matchHost": "github.com",
             "token": " ${{ secrets.RENOVATE_TOKEN }}"
         }
-    ]
+    ],
+    "renovate-config-presets": {
+        "fileMatch": [
+            "(^|/)renovate\\.json$",
+            "(^|/)default\\.json$"
+        ]
+    }
 }
