@@ -31,9 +31,6 @@
     "replacements:all",
     "workarounds:all"
   ],
-  "requiredStatusChecks": [
-    "test"
-  ],
   "vulnerabilityAlerts": {
     "groupName": "vulnerabilityAlerts",
     "prCreation": "immediate",
@@ -46,21 +43,22 @@
         "patch"
       ],
       "matchCurrentVersion": "!/^0/",
-      "excludePackagePatterns": [
-        "^@types/"
-      ],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
       "schedule": [
         "before 5am on monday"
+      ],
+      "matchPackageNames": [
+        "!/^@types//"
       ]
     }
   ],
   "osvVulnerabilityAlerts": true,
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [
-        "\\.sh$"
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.sh$/"
       ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sVERSION=(?<currentValue>.*)\\s"
