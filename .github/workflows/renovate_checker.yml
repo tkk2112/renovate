@@ -1,0 +1,71 @@
+name: Update Renovate Shared Config
+
+on:
+  schedule:
+    - cron: '0 0 * * MON'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check_config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-global-renovate-${{ hashFiles('.github/workflows/renovate-package-lock.json') }}
+          restore-keys: npm-global-renovate-
+
+      - name: Set up dependency files for caching
+        run: |
+          mkdir -p .github/npm-cache
+          # Copy existing package.json for renovate to npm-cache directory
+          cp .github/workflows/renovate-package.json .github/npm-cache/package.json
+          # Generate lock file
+          cd .github/npm-cache
+          npm install --package-lock-only
+          # Save the lock file for future cache key
+          cp package-lock.json ../../.github/workflows/renovate-package-lock.json
+
+      - run: npm install -g renovate
+
+      - name: Set workflow URL
+        run: |
+          echo "WORKFLOW_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_ENV
+
+      - name: Check and update Renovate configuration
+        id: check_config
+        run: |
+          python3 .github/workflows/process_renovate_config.py default.json
+          if [ -f changes_made.txt ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check_config.outputs.changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          # Use a personal access token to ensure workflow triggers
+          token: ${{ secrets.PAT }}
+          commit-message: "chore: Update Renovate shared config"
+          branch: renovate/config-update
+          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          title: "chore: apply renovate shared config updates"
+          body: |
+            This PR was created automatically to apply the latest Renovate schema updates
+            to `default.json` via the Renovate Config Validator.
+
+            The PR also includes updates to the renovate package lock file to ensure proper caching.
+
+            [View workflow run](${{ env.WORKFLOW_URL }})
+          add-paths: |
+            default.json
+            .github/workflows/renovate-package-lock.json
