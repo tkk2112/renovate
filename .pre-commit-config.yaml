@@ -5,12 +5,12 @@ default_install_hook_types:
 
 repos:
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.7.17
+    rev: 0.8.0
     hooks:
       - id: uv-sync
         args: ["--locked", "--all-packages"]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.1
+    rev: 0.33.2
     hooks:
       - id: check-github-workflows
       - id: check-renovate
