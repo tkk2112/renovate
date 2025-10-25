@@ -44,6 +44,15 @@
       "groupSlug": "all-minor-patch",
       "schedule": ["before 5am on monday"],
       "matchPackageNames": ["!/^@types//"]
+    },
+    {
+      "matchDatasources": ["python-version"],
+      "matchDepTypes": ["requires-python"],
+      "matchPackageNames": ["python"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": false,
+      "groupName": "pep621-python-version",
+      "prCreation": "immediate"
     }
   ],
   "osvVulnerabilityAlerts": true,
